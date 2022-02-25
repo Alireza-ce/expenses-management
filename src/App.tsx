@@ -1,4 +1,6 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom';
+import LoginPage from './containers/Login/login';
 
 interface Props {
   name:string
@@ -6,9 +8,9 @@ interface Props {
 
 function App(props:Props) {
   return (
-    <div>
-     {props.name}
-    </div>
+    <Routes>
+    <Route path="/" element={<LoginPage />} />
+  </Routes>
   );
 }
 
