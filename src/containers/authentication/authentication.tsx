@@ -1,18 +1,23 @@
+import { Container } from "../../components/container";
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { Authentication } from "./authentication.style";
+import { PrimaryTitle } from "../../components/titles";
 
 
-interface Props {}
+interface Props { }
 
 function AuthenticationPage() {
 
   return (
-    <>
-      <p>
-       headers came here
-      </p>
-      <Outlet />
-    </>
+    <Container>
+      <Authentication>
+        <PrimaryTitle textAlign="center">
+          Expenses Management
+        </PrimaryTitle>
+        <Outlet />
+      </Authentication>
+    </Container>
   );
 }
 
