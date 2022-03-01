@@ -26,7 +26,7 @@ function LoginPage() {
   return (
     <>
       <p>
-        login page {rendered}
+        login page  {rendered}
       </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
