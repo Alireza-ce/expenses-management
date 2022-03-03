@@ -7,3 +7,7 @@ interface Props{
 export const  PrimaryTitle = styled.h1<Props>`
     text-align:  ${props => props?.textAlign || 'left'};
 `;
+
+export const  SecondaryTitle = styled.h3<Props>`
+    text-align:  ${props => props?.textAlign || 'left'};
+`;
