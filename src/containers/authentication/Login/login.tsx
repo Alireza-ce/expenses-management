@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { ButtonForm } from "../../../components/button";
 import { AuthenticationForm } from "../../../components/form";
 import { TextFieldCustom } from "../../../components/form/input";
@@ -16,6 +17,7 @@ let rendered = 0;
 
 function LoginPage() {
   rendered++;
+  const navigate = useNavigate();
   const { signIn } = useAuth();
 
   const { handleSubmit, control, formState: { errors } } = useForm<LoginForm>({
@@ -28,7 +30,8 @@ function LoginPage() {
   const onSubmit: SubmitHandler<LoginForm> = data => {
     console.log(data);
     signIn(data.email, data.password)?.then(res => {
-      console.log(res)
+      localStorage.setItem('token', res.user.refreshToken);
+      navigate('/dashboard', { replace: false });
     }).catch(err => {
       console.log(err)
     })
