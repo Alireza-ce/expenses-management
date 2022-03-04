@@ -5,7 +5,9 @@ import { ButtonForm } from "../../../components/button";
 import { AuthenticationForm } from "../../../components/form";
 import { TextFieldCustom } from "../../../components/form/input";
 import { CustomLink, LinkBox } from "../../../components/form/links";
+import { SecondaryTitle } from "../../../components/titles";
 import { useAuth } from "../../../hooks/context/AuthProvider";
+import { LoginContainer } from "./login.style";
 
 interface Props { }
 interface LoginForm {
@@ -38,8 +40,11 @@ function LoginPage() {
   };
 
   return (
-    <>
+    <LoginContainer>
       <AuthenticationForm onSubmit={handleSubmit(onSubmit)}>
+        <SecondaryTitle textAlign="center">
+          Login
+        </SecondaryTitle>
         <Controller
           name="email"
           control={control}
@@ -60,11 +65,11 @@ function LoginPage() {
         <ButtonForm type="submit" variant="contained" color="primary">
           Login
         </ButtonForm>
+        <LinkBox>
+          You don't have Account? <CustomLink to="register"> Sign Up </CustomLink>
+        </LinkBox>
       </AuthenticationForm>
-      <LinkBox>
-        You don't have Account? <CustomLink to="register"> Sign Up </CustomLink>
-      </LinkBox>
-    </>
+    </LoginContainer>
   );
 }
 

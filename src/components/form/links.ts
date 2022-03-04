@@ -6,6 +6,6 @@ export const LinkBox = styled.div`
 `;
 
 export const CustomLink = styled(Link)`
-  color: darkblue;
+  color: ${props => props.theme.primaryColor};
   text-decoration: none;
 `;

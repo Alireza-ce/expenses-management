@@ -2,8 +2,10 @@ import { createTheme } from "@material-ui/core";
 import { pink, teal } from "@material-ui/core/colors";
 
 export const theme = {
-  fontColour: "purple",
   padding: "4px",
+  primaryColor:'#009688',
+  primaryDarkColor:'#00695c'
+
 };
 
 export const muiTheme = createTheme({

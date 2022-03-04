@@ -5,6 +5,10 @@ export const AuthenticationForm = styled.form`
   flex-direction: column;
   max-width: 550px;
   width: 100%;
-  margin: auto;
-  /* background-color:${props => props.theme.fontColour} */
+  margin: 32px auto;
+  padding: 24px;
+  box-shadow: 0px 0px 16px rgb(0 0 0 / 8%);
+  border-radius: 8px;
+
+  /* background-color:${(props) => props.theme.fontColour} */
 `;
