@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ButtonForm } from "../../../components/button";
 import { AuthenticationForm } from "../../../components/form";
 import { TextFieldCustom } from "../../../components/form/input";
-import { CustomLink } from "../../../components/form/links";
+import { CustomLink, LinkBox } from "../../../components/form/links";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 
 interface Props { }
@@ -57,13 +57,13 @@ function LoginPage() {
           rules={{ required: true }}
           render={({ field }) => <TextFieldCustom {...field} error={errors.password ? true : false} label="Password" variant="outlined" type='password' />}
         />
-        <ButtonForm type="submit" variant="contained">
+        <ButtonForm type="submit" variant="contained" color="primary">
           Login
         </ButtonForm>
       </AuthenticationForm>
-      <div>
+      <LinkBox>
         You don't have Account? <CustomLink to="register"> Sign Up </CustomLink>
-      </div>
+      </LinkBox>
     </>
   );
 }
