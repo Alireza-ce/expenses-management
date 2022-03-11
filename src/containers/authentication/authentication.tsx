@@ -1,9 +1,9 @@
 import { Container } from "../../components/container";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Authentication } from "./authentication.style";
+import { Authentication, Column, FormWrapper } from "./authentication.style";
 import { PrimaryTitle } from "../../components/titles";
-
+import classes from './authentication.module.scss';
 
 interface Props { }
 
@@ -15,7 +15,12 @@ function AuthenticationPage() {
         <PrimaryTitle textAlign="center">
           Expenses Management
         </PrimaryTitle>
-        <Outlet />
+        <div className={classes.formWrapper}>
+          <div className={classes.route}>
+            <Outlet />
+          </div>
+          <div >page logo and image came here</div>
+        </div>
       </Authentication>
     </Container>
   );

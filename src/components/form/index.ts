@@ -7,8 +7,7 @@ export const AuthenticationForm = styled.form`
   width: 100%;
   margin: 32px auto;
   padding: 24px;
-  box-shadow: 0px 0px 16px rgb(0 0 0 / 8%);
-  border-radius: 8px;
-
-  /* background-color:${(props) => props.theme.fontColour} */
+  box-shadow: 0px 0px 16px rgb(255 255 255 / 30%);
+  border-radius: 4px;
+  background-color:${(props) => props.theme.warnColor}
 `;

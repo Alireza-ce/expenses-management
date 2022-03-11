@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function PrivateRoute({ children }: any) {
-  const currentUser = localStorage.getItem('token')
+  const currentUser = localStorage.getItem('token');
   return currentUser ? children : <Navigate to="/" />;
 }
 

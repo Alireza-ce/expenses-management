@@ -6,3 +6,12 @@ export const Authentication = styled.div`
     justify-content: center;
     margin: 12px 0;
 `;
+
+export const FormWrapper = styled.div`
+    display:flex;
+
+`;
+
+export const Column = styled.div`
+    width:50%;
+`;

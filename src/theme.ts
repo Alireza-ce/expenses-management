@@ -1,17 +1,20 @@
 import { createTheme } from "@material-ui/core";
-import { pink, teal } from "@material-ui/core/colors";
+import { pink } from "@material-ui/core/colors";
 
 export const theme = {
   padding: "4px",
-  primaryColor:'#009688',
-  primaryDarkColor:'#00695c'
-
+  primaryColor: "#bc6452", //light orange
+  primaryDarkColor: "#272524", //dark
+  warnColor:'#f3ead4', //light cream
+  lightColor:'#c5b39c'//light brown
 };
 
 export const muiTheme = createTheme({
   palette: {
-    primary: teal,
-    secondary: pink,
+    primary: {
+      main: "#bc6452",
+    },
+    secondary: pink
   },
   typography: {
     fontFamily: "Fredoka",
