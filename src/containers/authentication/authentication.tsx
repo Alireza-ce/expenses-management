@@ -1,7 +1,7 @@
 import { Container } from "../../components/container";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Authentication, Column, FormWrapper } from "./authentication.style";
+import { Authentication } from "./authentication.style";
 import { PrimaryTitle } from "../../components/titles";
 import classes from './authentication.module.scss';
 
@@ -12,14 +12,14 @@ function AuthenticationPage() {
   return (
     <Container>
       <Authentication>
-        <PrimaryTitle textAlign="center">
-          Expenses Management
-        </PrimaryTitle>
         <div className={classes.formWrapper}>
-          <div className={classes.route}>
+          <div className={classes.routerOutlet}>
             <Outlet />
           </div>
-          <div >page logo and image came here</div>
+          <div className={classes.authenticationInfo}>
+            <h2>Expenses Management</h2>
+            <img src={require('../../assets/img/treasure.png')}  alt="authentication-logo"/>
+          </div>
         </div>
       </Authentication>
     </Container>
