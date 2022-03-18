@@ -3,16 +3,14 @@ import { pink } from "@material-ui/core/colors";
 
 export const theme = {
   padding: "4px",
-  primaryColor: "#bc6452", //light orange
-  primaryDarkColor: "#272524", //dark
-  warnColor:'#f3ead4', //light cream
-  lightColor:'#c5b39c'//light brown
+  primaryColor: "#404b58",
+  primaryDarkColor: "#fdfefe",
 };
 
 export const muiTheme = createTheme({
   palette: {
     primary: {
-      main: "#bc6452",
+      main: "#404b58",
     },
     secondary: pink
   },

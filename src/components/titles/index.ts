@@ -5,7 +5,7 @@ interface Props{
 }
 
 export const  PrimaryTitle = styled.h1<Props>`
-    color:  ${props => props?.color || props.theme.primaryColor};
+    color:  ${props => props?.color || props.theme.primaryDarkColor};
     text-align:  ${props => props?.textAlign || 'left'};
 `;
 

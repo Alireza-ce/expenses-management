@@ -9,5 +9,5 @@ export const AuthenticationForm = styled.form`
   padding: 24px;
   box-shadow: 0px 0px 16px rgb(255 255 255 / 30%);
   border-radius: 4px;
-  background-color:${(props) => props.theme.warnColor}
+  background-color:${(props) => props.theme.primaryDarkColor}
 `;
