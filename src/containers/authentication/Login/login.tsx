@@ -1,4 +1,6 @@
-import React from "react";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ButtonForm } from "../../../components/button";
@@ -8,6 +10,7 @@ import { CustomLink, LinkBox } from "../../../components/form/links";
 import { SecondaryTitle } from "../../../components/titles";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import { LoginContainer } from "./login.style";
+import classes from './login.module.scss';
 
 interface Props { }
 interface LoginForm {
@@ -15,11 +18,10 @@ interface LoginForm {
   password: string;
 }
 
-let rendered = 0;
 
 function LoginPage() {
-  rendered++;
   const navigate = useNavigate();
+  const [isLoading, setLoadingStatus] = useState<boolean>(false);
   const { signIn } = useAuth();
 
   const { handleSubmit, control, formState: { errors } } = useForm<LoginForm>({
@@ -31,11 +33,14 @@ function LoginPage() {
 
   const onSubmit: SubmitHandler<LoginForm> = data => {
     console.log(data);
+    setLoadingStatus(true)
     signIn(data.email, data.password)?.then(res => {
       localStorage.setItem('token', res.user.refreshToken);
       navigate('/dashboard', { replace: false });
     }).catch(err => {
       console.log(err)
+    }).finally(() => {
+      setLoadingStatus(false)
     })
   };
 
@@ -63,9 +68,9 @@ function LoginPage() {
           render={({ field }) => <TextFieldCustom {...field} error={errors.password ? true : false} label="Password" variant="outlined" type='password' />}
         />
         <ButtonForm type="submit" variant="contained" color="primary">
-          Login
+          {isLoading ? <CircularProgress style={{ width: '25px', height: '25px', color: "white" }} /> : 'Login'}
         </ButtonForm>
-        <LinkBox>
+        <LinkBox >
           You don't have Account? <CustomLink to="register"> Sign Up </CustomLink>
         </LinkBox>
       </AuthenticationForm>
