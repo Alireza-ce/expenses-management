@@ -3,6 +3,6 @@ import Button from "@material-ui/core/Button";
 
 export const ButtonForm = styled(Button)`
   && {
-    margin: 24px;
+    margin:12px 24px;
   }
 `;

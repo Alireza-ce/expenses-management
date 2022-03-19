@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export const LinkBox = styled.div`
   text-align: center;
+  margin-top:12px ;
 `;
 
 export const CustomLink = styled(Link)`
