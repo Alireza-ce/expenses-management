@@ -1,14 +1,14 @@
 import { ThemeProvider as ThemeProviderMui } from '@material-ui/core';
-import React from 'react'
+import React, { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import AuthenticationPage from './containers/authentication/authentication';
+import Spinner from './components/loading-spinner';
 import LoginPage from './containers/authentication/Login/login';
 import RegisterPage from './containers/authentication/register/register';
 import DashboardPage from './containers/Dashboard/dashboard';
 import { AuthProvider } from './hooks/context/AuthProvider';
 import { muiTheme, theme } from './theme';
-
+const AuthenticationPage = lazy(() => import('./containers/authentication/authentication'));
 interface Props {
   name: string
 }
@@ -23,6 +23,7 @@ function App(props: Props) {
     <AuthProvider>
       <ThemeProviderMui theme={muiTheme}>
         <ThemeProvider theme={theme}>
+        <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path="" element={<AuthenticationPage />}>
               <Route index element={<LoginPage />} />
@@ -38,6 +39,7 @@ function App(props: Props) {
             />
             {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
+          </Suspense>
         </ThemeProvider>
       </ThemeProviderMui>
     </AuthProvider>

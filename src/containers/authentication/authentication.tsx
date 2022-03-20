@@ -10,7 +10,7 @@ interface Props { }
 function AuthenticationPage() {
 
   return (
-    <Container>
+    <Container className={classes.authenticationPage}>
       <Authentication>
         <div className={classes.formWrapper}>
           <div className={classes.routerOutlet}>
