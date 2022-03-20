@@ -37,7 +37,7 @@ function LoginPage() {
     setLoadingStatus(true)
     signIn(data.email, data.password)?.then(res => {
       localStorage.setItem('token', res.user.refreshToken);
-      navigate('/dashboard', { replace: false });
+      navigate('/panel', { replace: false });
     }).catch(err => {
       setFirebaseError({ show: true, message: 'Email or password is incorrect!' })
     }).finally(() => {

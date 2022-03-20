@@ -5,7 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import Spinner from './components/loading-spinner';
 import LoginPage from './containers/authentication/Login/login';
 import RegisterPage from './containers/authentication/register/register';
-import DashboardPage from './containers/Dashboard/dashboard';
+import Dashboard from './containers/panel-layout/Dashboard/dashboard';
+import PanelLayout from './containers/panel-layout/panel-layout';
 import { AuthProvider } from './hooks/context/AuthProvider';
 import { muiTheme, theme } from './theme';
 const AuthenticationPage = lazy(() => import('./containers/authentication/authentication'));
@@ -23,22 +24,22 @@ function App(props: Props) {
     <AuthProvider>
       <ThemeProviderMui theme={muiTheme}>
         <ThemeProvider theme={theme}>
-        <Suspense fallback={<Spinner />}>
-          <Routes>
-            <Route path="" element={<AuthenticationPage />}>
-              <Route index element={<LoginPage />} />
-              <Route path="register" element={<RegisterPage />} />
-            </Route>
-            <Route
-              path="/dashboard"
-              element={
+          <Suspense fallback={<Spinner />}>
+            <Routes>
+              <Route path="" element={<AuthenticationPage />}>
+                <Route index element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
+              </Route>
+              <Route path="/panel" element={
                 <PrivateRoute>
-                  <DashboardPage />
+                  <PanelLayout />
                 </PrivateRoute>
-              }
-            />
-            {/* <Route path="*" element={<NotFound />} /> */}
-          </Routes>
+              }>
+                <Route index element={<Dashboard />} />
+                {/* <Route path="dashboard" element={<Dashboard />} /> */}
+              </Route>
+              {/* <Route path="*" element={<NotFound />} /> */}
+            </Routes>
           </Suspense>
         </ThemeProvider>
       </ThemeProviderMui>

@@ -1,8 +1,9 @@
 import Drawer from '@material-ui/core/Drawer';
 import React from 'react'
+import { Outlet } from 'react-router-dom';
 import classes from './panel-layout.module.scss';
 
-function DashboardPage() {
+function PanelLayout() {
   return (
     <div className={classes.layout}>
       <Drawer anchor="left" variant='permanent' className={classes.drawer} >
@@ -13,10 +14,10 @@ function DashboardPage() {
       </Drawer>
       <div className={classes.layoutContent}>
         {/* toolbar */}
-        {/* outlet */}
+        <Outlet />
       </div>
     </div>
   )
 }
 
-export default DashboardPage;
+export default PanelLayout;
