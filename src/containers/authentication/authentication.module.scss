@@ -1,14 +1,7 @@
 @import '/src/assets/sass/variable';
+@import '/src/assets/sass/mixin';
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
 
-    100% {
-        opacity: 1;
-    }
-}
 
 .formWrapper {
     display: flex;
@@ -42,5 +35,6 @@
 }
 
 .authenticationPage {
-    animation: fadeIn 0.5s ease-in;
+    @include fadeInKeyFrame;
+    animation: fadeIn 1s ease-in;
 }
