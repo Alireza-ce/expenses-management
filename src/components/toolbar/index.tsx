@@ -6,6 +6,7 @@ import classes from './toolbar.module.scss';
 export default function ToolBar() {
     const { logOut } = useAuth();
     const navigate = useNavigate();
+    const current = new Date();
 
     function userLogOut() {
         logOut();
@@ -15,7 +16,7 @@ export default function ToolBar() {
 
     return (
         <div className={classes.toolbar}>
-            <div className={classes.date}>12/23/2021</div>
+            <div className={classes.date}>{current.getDate()}/{current.getMonth()+1}/{current.getFullYear()}</div>
             <div className={classes.profileLinks}>
                 <p onClick={userLogOut}>logOut</p>
                 <p>Profile</p>
