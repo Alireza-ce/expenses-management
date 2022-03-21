@@ -1,0 +1,16 @@
+@import '/src/assets/sass/variable';
+
+.toolbar{
+    background-color: $white;
+    display: flex;
+    justify-content: space-between;
+    padding:12px 24px;
+
+    .profileLinks{
+        display: flex;
+        p{
+            margin-left: 8px;
+            cursor: pointer;
+        }
+    }
+}

@@ -9,6 +9,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import ToolBar from './../../components/toolbar';
 
 function PanelLayout() {
   const navigate = useNavigate();
@@ -47,8 +48,10 @@ function PanelLayout() {
         </div>
       </Drawer>
       <div className={classes.layoutContent}>
-        {/* toolbar */}
-        <Outlet />
+       <ToolBar />
+        <div className={classes.routerOutlet}>
+          <Outlet />
+        </div>
       </div>
     </div>
   )
