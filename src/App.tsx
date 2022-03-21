@@ -6,10 +6,11 @@ import Spinner from './components/loading-spinner';
 import LoginPage from './containers/authentication/Login/login';
 import RegisterPage from './containers/authentication/register/register';
 import Dashboard from './containers/panel-layout/Dashboard/dashboard';
-import PanelLayout from './containers/panel-layout/panel-layout';
 import { AuthProvider } from './hooks/context/AuthProvider';
 import { muiTheme, theme } from './theme';
 const AuthenticationPage = lazy(() => import('./containers/authentication/authentication'));
+const PanelLayout = lazy(() => import('./containers/panel-layout/panel-layout'));
+
 interface Props {
   name: string
 }
@@ -36,7 +37,7 @@ function App(props: Props) {
                 </PrivateRoute>
               }>
                 <Route index element={<Dashboard />} />
-                {/* <Route path="dashboard" element={<Dashboard />} /> */}
+                <Route path="dashboard" element={<Dashboard />} />
               </Route>
               {/* <Route path="*" element={<NotFound />} /> */}
             </Routes>
