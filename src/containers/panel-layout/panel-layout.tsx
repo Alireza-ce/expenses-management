@@ -10,11 +10,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ToolBar from './../../components/toolbar';
+import { useAuth } from '../../hooks/context/AuthProvider';
 
 function PanelLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { currentUser } = useAuth();
   const sideBarLinks = [
     {
       text: 'Dashboard',
@@ -34,7 +35,7 @@ function PanelLayout() {
         <div className={classes.drawerContent}>
           <div className={classes.userInfo}>
             <img src={require('../../assets/img/avatar.png')} alt="user-icon" />
-            <p>user name</p>
+            <p>{currentUser?.email}</p>
           </div>
           <Divider />
           <List>
@@ -48,7 +49,7 @@ function PanelLayout() {
         </div>
       </Drawer>
       <div className={classes.layoutContent}>
-       <ToolBar />
+        <ToolBar />
         <div className={classes.routerOutlet}>
           <Outlet />
         </div>
