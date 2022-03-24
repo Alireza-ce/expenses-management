@@ -6,6 +6,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { ButtonForm } from '../../button';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { ArrowUpwardOutlined } from '@mui/icons-material';
+import { addBudget } from '../../../firebase/firebase';
+import { useAuth } from '../../../hooks/context/AuthProvider';
 
 interface BudGetForm {
   name: string,
@@ -14,7 +16,7 @@ interface BudGetForm {
 
 export default function AddBudget() {
   const [isLoading, setLoadingStatus] = useState<boolean>(false);
-
+  const { currentUser } = useAuth();
   const { handleSubmit, control, formState: { errors } } = useForm<BudGetForm>({
     defaultValues: {
       name: '',
@@ -23,15 +25,21 @@ export default function AddBudget() {
   });
 
   const onSubmit: SubmitHandler<BudGetForm> = data => {
-    console.log(data)
     setLoadingStatus(true);
-    setLoadingStatus(false);
+    addBudget({ ...data, user: currentUser?.uid })
+      .then(res => {
+        // in this place reset the form values
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoadingStatus(false);
+      })
   };
 
   return (
     <div>
       <h2 className={classes.form_title}>
-      <ListItemIcon style={{ minWidth: 34 }}><ArrowUpwardOutlined color='success' /></ListItemIcon> Add Budget
+        <ListItemIcon style={{ minWidth: 34 }}><ArrowUpwardOutlined color='success' /></ListItemIcon> Add Budget
       </h2>
       <form className={classes.form_wrapper} onSubmit={handleSubmit(onSubmit)}>
         <Controller
@@ -49,7 +57,7 @@ export default function AddBudget() {
           render={({ field }) => <TextFieldCustom {...field} error={errors.spendingMoney ? true : false} label="Spending Money" variant="outlined" />}
         />
         <ButtonForm type="submit" variant="contained" color="primary">
-          {isLoading ? <CircularProgress style={{ width: '24px', height: '24px', color: "white" }} /> :' Add Budget'}
+          {isLoading ? <CircularProgress style={{ width: '24px', height: '24px', color: "white" }} /> : ' Add Budget'}
         </ButtonForm>
       </form>
     </div>

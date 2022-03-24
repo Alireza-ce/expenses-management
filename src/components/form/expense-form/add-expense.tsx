@@ -66,7 +66,7 @@ export default function AddExpense() {
             label="Budget"
             onChange={handleChange}
           >
-            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={1}>uncategorized</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </Select>
