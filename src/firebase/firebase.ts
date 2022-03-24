@@ -1,7 +1,7 @@
 import * as firebase from "firebase/app";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { BudgetRecord } from "./firebase-model";
+import { BudgetRecord } from "./firebase.model";
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
