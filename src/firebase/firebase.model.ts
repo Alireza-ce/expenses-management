@@ -6,6 +6,7 @@ export interface BudgetRecord {
 }
 
 export interface ExpenseRecord {
+  id?: string | number;
   description: string;
   amount: number | string;
   user: string | undefined;

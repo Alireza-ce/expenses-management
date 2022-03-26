@@ -11,6 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { BudgetRecord } from "../../../firebase/firebase.model";
+import { addExpense } from "../../../firebase/firebase";
+import { useAuth } from "../../../hooks/context/AuthProvider";
 
 interface BudGetForm {
   description: string;
@@ -24,7 +26,8 @@ interface Props {
 export default function AddExpense({ budgets }: Props) {
   const [isLoading, setLoadingStatus] = useState<boolean>(false);
   const [budget, setBudget] = React.useState("");
-  console.log(budgets);
+  const { currentUser } = useAuth();
+
   const handleChange = (event: any) => {
     setBudget(event.target.value as string);
   };
@@ -47,7 +50,16 @@ export default function AddExpense({ budgets }: Props) {
   const onSubmit: SubmitHandler<BudGetForm> = (data) => {
     console.log(data);
     setLoadingStatus(true);
-    setLoadingStatus(false);
+    addExpense({ ...data, user: currentUser?.uid, budgetId: budget })
+      .then((res) => {
+        console.log("added successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoadingStatus(false);
+      });
   };
 
   return (
