@@ -1,4 +1,5 @@
 export interface BudgetRecord {
+  id?: string | number;
   name: string;
   spendingMoney: number | string;
   user: string | undefined;

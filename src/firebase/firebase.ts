@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDoc, getDocs, getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { BudgetRecord } from "./firebase.model";
 
@@ -16,7 +16,9 @@ const app = firebase.initializeApp({
 //db config and function
 const db = getFirestore();
 
-const budgetRef = collection(db, "budgets");
+export const budgetRef = collection(db, "budgets");
+
+export const getBudgetList = getDocs(budgetRef);
 
 export const addBudget = (budgetRecord: BudgetRecord) => {
   return addDoc(budgetRef, budgetRecord);
