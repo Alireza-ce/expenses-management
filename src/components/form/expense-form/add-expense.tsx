@@ -32,10 +32,6 @@ export default function AddExpense({ budgets }: Props) {
     setBudget(event.target.value as string);
   };
 
-  useEffect(() => {
-    console.log(budgets);
-  });
-
   const {
     handleSubmit,
     control,
@@ -48,7 +44,6 @@ export default function AddExpense({ budgets }: Props) {
   });
 
   const onSubmit: SubmitHandler<BudGetForm> = (data) => {
-    console.log(data);
     setLoadingStatus(true);
     addExpense({ ...data, user: currentUser?.uid, budgetId: budget })
       .then((res) => {

@@ -16,7 +16,6 @@ export default function Dashboard() {
   const getBudgets = () => {
     getBudgetList.then((data) => {
       let budgetList: BudgetRecord[] = [];
-      console.log("res:", data);
       data.docs.forEach((budget) => {
         budgetList.push({
           id: budget.id,
@@ -30,10 +29,9 @@ export default function Dashboard() {
   };
 
   const updateBudgetList = (budget: BudgetRecord) => {
-    let budgetList = budgets || [];
+    let budgetList = budgets ? [...budgets] : [];
     budgetList.push(budget);
     setBudget(budgetList);
-    console.log(budgetList, budget, budgets);
   };
 
   return (
