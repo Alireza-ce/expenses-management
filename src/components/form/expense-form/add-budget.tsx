@@ -58,7 +58,7 @@ export default function AddBudget({ updateBudgetList }: Props) {
           name="name"
           control={control}
           rules={{
-            required: true,
+            required: "This field is required",
           }}
           render={({ field }) => (
             <TextFieldCustom
@@ -69,10 +69,16 @@ export default function AddBudget({ updateBudgetList }: Props) {
             />
           )}
         />
+        {errors?.name && (
+          <p className={classes.error_text}>{errors.name?.message}</p>
+        )}
         <Controller
           name="spendingMoney"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: "This field is required",
+            min: { value: 10, message: "Minimum value is 10$" },
+          }}
           render={({ field }) => (
             <TextFieldCustom
               {...field}
@@ -82,6 +88,9 @@ export default function AddBudget({ updateBudgetList }: Props) {
             />
           )}
         />
+        {errors?.spendingMoney && (
+          <p className={classes.error_text}>{errors.spendingMoney?.message}</p>
+        )}
         <ButtonForm type="submit" variant="contained" color="primary">
           {isLoading ? (
             <CircularProgress

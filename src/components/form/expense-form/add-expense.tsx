@@ -63,7 +63,7 @@ export default function AddExpense({ budgets }: Props) {
           name="description"
           control={control}
           rules={{
-            required: true,
+            required: "This field is required",
           }}
           render={({ field }) => (
             <TextFieldCustom
@@ -74,10 +74,16 @@ export default function AddExpense({ budgets }: Props) {
             />
           )}
         />
+        {errors?.description && (
+          <p className={classes.error_text}>{errors.description?.message}</p>
+        )}
         <Controller
           name="amount"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: "This field is required",
+            min: { value: 10, message: "Minimum value is 10$" },
+          }}
           render={({ field }) => (
             <TextFieldCustom
               {...field}
@@ -87,8 +93,11 @@ export default function AddExpense({ budgets }: Props) {
             />
           )}
         />
+        {errors?.amount && (
+          <p className={classes.error_text}>{errors.amount?.message}</p>
+        )}
         <FormControl variant="outlined" style={{ margin: "12px 24px" }}>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <InputLabel id="demo-simple-select-label">Budget</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
