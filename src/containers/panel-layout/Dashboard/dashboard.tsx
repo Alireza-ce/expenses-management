@@ -4,19 +4,24 @@ import AddBudget from "../../../components/form/expense-form/add-budget";
 import AddExpense from "../../../components/form/expense-form/add-expense";
 import { getBudgetList } from "../../../firebase/firebase";
 import { BudgetRecord } from "../../../firebase/firebase.model";
+import { useAuth } from "../../../hooks/context/AuthProvider";
 import classes from "./dashboard.module.scss";
 
 export default function Dashboard() {
   const [budgets, setBudget] = useState<BudgetRecord[]>();
+  const [totalMoney, setTotalMoney] = useState<number>(0);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     getBudgets();
   }, []);
 
   const getBudgets = () => {
-    getBudgetList.then((data) => {
+    getBudgetList(currentUser?.uid).then((data) => {
       let budgetList: BudgetRecord[] = [];
+      let money: number = 0;
       data.docs.forEach((budget) => {
+        money += Number(budget.data().spendingMoney);
         budgetList.push({
           id: budget.id,
           name: budget.data().name,
@@ -24,6 +29,8 @@ export default function Dashboard() {
           user: budget.data().user,
         });
       });
+
+      setTotalMoney(money);
       setBudget(budgetList);
     });
   };

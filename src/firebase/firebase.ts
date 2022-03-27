@@ -1,5 +1,12 @@
 import * as firebase from "firebase/app";
-import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { BudgetRecord, ExpenseRecord } from "./firebase.model";
 
@@ -19,7 +26,10 @@ const db = getFirestore();
 export const budgetRef = collection(db, "budgets");
 export const expensesRef = collection(db, "expenses");
 
-export const getBudgetList = getDocs(budgetRef);
+export const getBudgetList = (user: string | undefined) => {
+  const budgetQuery = query(budgetRef, where("user", "==", user));
+  return getDocs(budgetQuery);
+};
 export const getExpensesList = getDocs(expensesRef);
 
 export const addBudget = (budgetRecord: BudgetRecord) => {
