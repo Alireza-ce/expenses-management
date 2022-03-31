@@ -1,23 +1,26 @@
-import { onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AddBudget from "../../../components/form/expense-form/add-budget";
 import AddExpense from "../../../components/form/expense-form/add-expense";
 import { getBudgetList } from "../../../firebase/firebase";
 import { BudgetRecord } from "../../../firebase/firebase.model";
 import { useAuth } from "../../../hooks/context/AuthProvider";
+import { addBudget, addBudgetList } from "../../../redux/actions";
+import { RootState } from "../../../redux/root-reducer";
 import classes from "./dashboard.module.scss";
 
 export default function Dashboard() {
-  const [budgets, setBudget] = useState<BudgetRecord[]>();
   const [totalMoney, setTotalMoney] = useState<number>(0);
   const { currentUser } = useAuth();
-
+  const dispatch = useDispatch();
+  const budgets = useSelector((state:RootState) => state.budgets)
+  
   useEffect(() => {
     getBudgets();
   }, []);
 
   const getBudgets = () => {
-    getBudgetList(currentUser?.uid).then((data) => {
+    getBudgetList(currentUser?.uid || '12').then((data) => {
       let budgetList: BudgetRecord[] = [];
       let money: number = 0;
       data.docs.forEach((budget) => {
@@ -29,16 +32,13 @@ export default function Dashboard() {
           user: budget.data().user,
         });
       });
-
+      dispatch(addBudgetList(budgetList))
       setTotalMoney(money);
-      setBudget(budgetList);
     });
   };
 
   const updateBudgetList = (budget: BudgetRecord) => {
-    let budgetList = budgets ? [...budgets] : [];
-    budgetList.push(budget);
-    setBudget(budgetList);
+    dispatch(addBudget(budget))
   };
 
   return (

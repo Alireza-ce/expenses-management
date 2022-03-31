@@ -1,5 +1,6 @@
 import { ThemeProvider as ThemeProviderMui } from '@material-ui/core';
 import React, { Suspense, lazy } from 'react';
+import { Provider } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Spinner from './components/loading-spinner';
@@ -7,6 +8,7 @@ import LoginPage from './containers/authentication/Login/login';
 import RegisterPage from './containers/authentication/register/register';
 import Dashboard from './containers/panel-layout/Dashboard/dashboard';
 import { AuthProvider } from './hooks/context/AuthProvider';
+import store from './redux/store';
 import { muiTheme, theme } from './theme';
 const AuthenticationPage = lazy(() => import('./containers/authentication/authentication'));
 const PanelLayout = lazy(() => import('./containers/panel-layout/panel-layout'));
@@ -22,6 +24,7 @@ export function PrivateRoute({ children }: any) {
 
 function App(props: Props) {
   return (
+    <Provider store={store}>
     <AuthProvider>
       <ThemeProviderMui theme={muiTheme}>
         <ThemeProvider theme={theme}>
@@ -45,6 +48,7 @@ function App(props: Props) {
         </ThemeProvider>
       </ThemeProviderMui>
     </AuthProvider>
+    </Provider>
   );
 }
 
