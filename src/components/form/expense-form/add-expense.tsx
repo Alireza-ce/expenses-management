@@ -27,7 +27,7 @@ export default function AddExpense({ budgets }: Props) {
   const [isLoading, setLoadingStatus] = useState<boolean>(false);
   const [budget, setBudget] = React.useState("");
   const { currentUser } = useAuth();
-
+  
   const handleChange = (event: any) => {
     setBudget(event.target.value as string);
   };
@@ -57,6 +57,15 @@ export default function AddExpense({ budgets }: Props) {
       });
   };
 
+  if(budgets?.length === 0){
+    return (
+      <div className={classes.empty_list}>
+        <p>
+          Your  budget list is empty! <br /> To add expenses you need to have add budget first
+        </p>
+      </div>
+    )
+  }
   return (
     <div>
       <h2 className={classes.form_title}>

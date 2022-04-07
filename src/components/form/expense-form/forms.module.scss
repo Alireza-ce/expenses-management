@@ -14,3 +14,12 @@
     margin: 0 24px;
     color: $red;
 }
+
+.empty_list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+        text-align: center;
+    }
+}

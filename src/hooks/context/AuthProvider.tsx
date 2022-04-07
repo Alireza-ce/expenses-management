@@ -27,7 +27,6 @@ export function AuthProvider({ children }: Props) {
 
     useEffect(() => {
         const subscribe = onAuthStateChanged(auth, (user) => {
-            console.log(user);
             changeUser(user);
         });
         return subscribe;

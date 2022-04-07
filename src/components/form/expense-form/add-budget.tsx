@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { TextFieldCustom } from "../input";
 import classes from "./forms.module.scss";
@@ -9,6 +9,7 @@ import { ArrowUpwardOutlined } from "@mui/icons-material";
 import { addBudget } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import { BudgetRecord } from "../../../firebase/firebase.model";
+import { useMutation, useQueryClient } from "react-query";
 
 interface BudGetForm {
   name: string;
@@ -19,9 +20,10 @@ interface Props {
   updateBudgetList: (budget: BudgetRecord) => void;
 }
 
-export default function AddBudget({ updateBudgetList }: Props) {
-  const [isLoading, setLoadingStatus] = useState<boolean>(false);
+export default function AddBudget() {
+  const { mutate, isLoading } = useMutation(addBudget);
   const { currentUser } = useAuth();
+  const queryClient = useQueryClient();
   const {
     handleSubmit,
     control,
@@ -34,15 +36,11 @@ export default function AddBudget({ updateBudgetList }: Props) {
   });
 
   const onSubmit: SubmitHandler<BudGetForm> = (data) => {
-    setLoadingStatus(true);
-    addBudget({ ...data, user: currentUser?.uid })
-      .then((res) => {
-        updateBudgetList({ ...data, user: currentUser?.uid, id: res.id });
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setLoadingStatus(false);
-      });
+    mutate({ ...data, user: currentUser?.uid }, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries('budgetList');
+      }
+    })
   };
 
   return (
