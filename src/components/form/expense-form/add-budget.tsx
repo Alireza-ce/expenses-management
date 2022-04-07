@@ -10,6 +10,7 @@ import { addBudget } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import { BudgetRecord } from "../../../firebase/firebase.model";
 import { useMutation, useQueryClient } from "react-query";
+import Snackbar from "@material-ui/core/Snackbar";
 
 interface BudGetForm {
   name: string;
@@ -21,12 +22,13 @@ interface Props {
 }
 
 export default function AddBudget() {
-  const { mutate, isLoading } = useMutation(addBudget);
+  const { mutate, isLoading, isSuccess, reset: resetMutation } = useMutation(addBudget);
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
   const {
     handleSubmit,
     control,
+    resetField,
     formState: { errors },
   } = useForm<BudGetForm>({
     defaultValues: {
@@ -39,9 +41,12 @@ export default function AddBudget() {
     mutate({ ...data, user: currentUser?.uid }, {
       onSuccess: (data) => {
         queryClient.invalidateQueries('budgetList');
+        resetField("name")
+        resetField("spendingMoney")
       }
     })
   };
+
 
   return (
     <div>
@@ -99,6 +104,7 @@ export default function AddBudget() {
           )}
         </ButtonForm>
       </form>
+      <Snackbar open={isSuccess} autoHideDuration={4000} message="Budget added successfully" onClose={resetMutation} />
     </div>
   );
 }

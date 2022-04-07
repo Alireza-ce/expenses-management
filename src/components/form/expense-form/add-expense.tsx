@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { TextFieldCustom } from "../input";
 import classes from "./forms.module.scss";
@@ -13,6 +13,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { BudgetRecord } from "../../../firebase/firebase.model";
 import { addExpense } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
+import { useMutation, useQueryClient } from "react-query";
+import Snackbar from "@material-ui/core/Snackbar";
 
 interface BudGetForm {
   description: string;
@@ -24,10 +26,11 @@ interface Props {
 }
 
 export default function AddExpense({ budgets }: Props) {
-  const [isLoading, setLoadingStatus] = useState<boolean>(false);
+  const { mutate, isLoading,isSuccess,reset:resetMutation } = useMutation(addExpense);
   const [budget, setBudget] = React.useState("");
   const { currentUser } = useAuth();
-  
+  const queryClient = useQueryClient();
+
   const handleChange = (event: any) => {
     setBudget(event.target.value as string);
   };
@@ -35,6 +38,7 @@ export default function AddExpense({ budgets }: Props) {
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<BudGetForm>({
     defaultValues: {
@@ -44,20 +48,17 @@ export default function AddExpense({ budgets }: Props) {
   });
 
   const onSubmit: SubmitHandler<BudGetForm> = (data) => {
-    setLoadingStatus(true);
-    addExpense({ ...data, user: currentUser?.uid, budgetId: budget })
-      .then((res) => {
-        console.log("added successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoadingStatus(false);
-      });
+    mutate({ ...data, user: currentUser?.uid, budgetId: budget }, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries('totalExpenses');
+        setValue('amount','');
+        setValue('description','');
+        setBudget("");
+      }
+    })
   };
 
-  if(budgets?.length === 0){
+  if (budgets?.length === 0) {
     return (
       <div className={classes.empty_list}>
         <p>
@@ -138,6 +139,7 @@ export default function AddExpense({ budgets }: Props) {
           )}
         </ButtonForm>
       </form>
+      <Snackbar open={isSuccess} autoHideDuration={4000} message="Expense added successfully" onClose={resetMutation} />
     </div>
   );
 }

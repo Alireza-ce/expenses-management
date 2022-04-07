@@ -31,7 +31,13 @@ export const getBudgetList = ({ queryKey }: any) => {
   const budgetQuery = query(budgetRef, where("user", "==", user));
   return getDocs(budgetQuery);
 };
-export const getExpensesList = getDocs(expensesRef);
+
+export const getExpenseByUser = ({ queryKey }: any) => {
+  const user = queryKey[1];
+  const expensesQuery = query(expensesRef, where("user", "==", user));
+  return getDocs(expensesQuery);
+};
+
 
 export const addBudget = (budgetRecord: BudgetRecord) => {
   return addDoc(budgetRef, budgetRecord);
