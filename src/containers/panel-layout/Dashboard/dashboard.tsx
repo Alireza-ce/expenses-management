@@ -27,7 +27,7 @@ export default function Dashboard() {
   })
 
   const { data: expenses, isLoading: isLoadingExpenses } = useQuery(['totalExpenses', currentUser?.uid], getExpenseByUser, {
-    enabled: !!!!currentUser,
+    enabled: !!currentUser,
     select: (data) => {
       let totalExpenses: number = 0;
       data.docs.forEach(expense => {

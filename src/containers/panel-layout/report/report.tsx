@@ -1,7 +1,5 @@
 import React from "react";
 import { useQuery } from "react-query";
-import AddBudget from "../../../components/form/expense-form/add-budget";
-import AddExpense from "../../../components/form/expense-form/add-expense";
 import { getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import classes from "./report.module.scss";
@@ -20,6 +18,7 @@ export default function Report() {
           name: budget.data().name,
           spendingMoney: budget.data().spendingMoney,
           user: budget.data().user,
+          children: [{}]
         }
       })
       return { budgetList, totalMoney: money };
@@ -27,13 +26,20 @@ export default function Report() {
   })
 
   const { data: expenses, isLoading: isLoadingExpenses } = useQuery(['totalExpenses', currentUser?.uid], getExpenseByUser, {
-    enabled: !!!!currentUser,
+    enabled: !!currentUser && !!budgets,
     select: (data) => {
-      let totalExpenses: number = 0;
-      data.docs.forEach(expense => {
-        totalExpenses += Number(expense.data().amount);
+      let expensesListBaseBudget = budgets?.budgetList;
+      data.docs.forEach((budget) => {
+        let parentBudget = expensesListBaseBudget?.find(bud => bud?.id === budget.data().budgetId)
+        let expense = {
+          id: budget.id,
+          amount: budget.data().amount,
+          description: budget.data().description,
+        }
+        parentBudget?.children.push(expense)
       })
-      return totalExpenses;
+      console.log(expensesListBaseBudget)
+      return expensesListBaseBudget;
     },
   })
 
