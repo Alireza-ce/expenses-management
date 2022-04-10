@@ -8,10 +8,11 @@ import { ThemeProvider } from "styled-components";
 import Spinner from "./components/loading-spinner";
 import LoginPage from "./containers/authentication/Login/login";
 import RegisterPage from "./containers/authentication/register/register";
-import Dashboard from "./containers/panel-layout/Dashboard/dashboard";
+import Dashboard from "./containers/panel-layout/dashboard/dashboard";
 import { AuthProvider } from "./hooks/context/AuthProvider";
 import store from "./redux/store";
 import { muiTheme, theme } from "./theme";
+import Report from "./containers/panel-layout/report/report";
 const AuthenticationPage = lazy(
   () => import("./containers/authentication/authentication")
 );
@@ -52,7 +53,7 @@ function App(props: Props) {
                     }
                   >
                     <Route index element={<Dashboard />} />
-                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="report" element={<Report />} />
                   </Route>
                   {/* <Route path="*" element={<NotFound />} /> */}
                 </Routes>

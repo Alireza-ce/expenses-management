@@ -24,7 +24,7 @@ function PanelLayout() {
     },
     {
       text: 'Report',
-      path: '/panel/dashboard',
+      path: '/panel/report',
       icon: <AttachMoneyIcon />
     }
   ]
