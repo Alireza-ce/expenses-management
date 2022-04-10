@@ -43,9 +43,28 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className={classes.cardsTransactions}>
-        in this place we put 3 card of spends and ...
-       expense: {expenses} -  total: {budgets?.totalMoney} - remain: {(budgets && expenses) && budgets?.totalMoney - expenses}
+      <div className={classes.info_box}>
+        <div className={classes.remain_budget}>
+          <div className={classes.title}>
+            <img src={require('../../../assets/img/love.png')} alt="happy-icon" />
+            <p>Remaining Budget</p>
+          </div>
+          <p>{(budgets && expenses) && budgets?.totalMoney - expenses} $</p>
+        </div>
+        <div className={classes.budget_card}>
+          <div className={classes.title}>
+            <img src={require('../../../assets/img/happy.png')} alt="happy-icon" />
+            <p>Total Budget</p>
+          </div>
+          <p>{budgets?.totalMoney} $</p>
+        </div>
+        <div className={classes.expenses_card}>
+          <div className={classes.title}>
+            <img src={require('../../../assets/img/sad.png')} alt="happy-icon" />
+            <p>Expenses</p>
+          </div>
+          <p>{expenses} $</p>
+        </div>
       </div>
       <div className={classes.formsGroup}>
         <div className={classes.cardsTransactions}>
