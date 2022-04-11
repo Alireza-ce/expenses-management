@@ -20,6 +20,7 @@ export default function Dashboard() {
           name: budget.data().name,
           spendingMoney: budget.data().spendingMoney,
           user: budget.data().user,
+          children: [{}]
         }
       })
       return { budgetList, totalMoney: money };
