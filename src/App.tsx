@@ -8,7 +8,7 @@ import { ThemeProvider } from "styled-components";
 import Spinner from "./components/loading-spinner";
 import LoginPage from "./containers/authentication/Login/login";
 import RegisterPage from "./containers/authentication/register/register";
-import Dashboard from "./containers/panel-layout/dashboard/dashboard";
+import Dashboard from "./containers/panel-layout/Dashboard/dashboard";
 import { AuthProvider } from "./hooks/context/AuthProvider";
 import store from "./redux/store";
 import { muiTheme, theme } from "./theme";
