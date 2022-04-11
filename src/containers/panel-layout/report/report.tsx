@@ -1,13 +1,15 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
-import { useQuery } from "react-query";
-import { getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { deleteBudget, getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import classes from "./report.module.scss";
 
 export default function Report() {
   const { currentUser } = useAuth();
-
+  const { mutate, isSuccess, reset: resetMutation } = useMutation(deleteBudget);
+  const queryClient = useQueryClient();
+  
   const { data: budgets, isLoading, isError } = useQuery(['budgetList', currentUser?.uid], getBudgetList, {
     enabled: !!currentUser,
     select: (data) => {
@@ -44,10 +46,18 @@ export default function Report() {
         }
         parentBudget?.children.push(expense)
       })
-      console.log(expensesListBaseBudget)
+    
       return expensesListBaseBudget;
     },
   })
+
+  const onDeleteBudget = (budgetId:string) => {
+    mutate(budgetId, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(['budgetList','totalExpenses']);
+      }
+    })
+  };
 
   if (isLoading || !currentUser || isLoadingExpenses) {
     return <span>Loading...</span>
@@ -70,7 +80,7 @@ export default function Report() {
           <div className={classes.card_buttons}>
             <Button className={`${classes.detail_button} ${classes.info_button}`} type="submit" variant="contained">Expenses List</Button>
             <Button className={`${classes.detail_button} ${classes.edit_button}` } type="submit" variant="contained">Edit Budget</Button>
-            <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained" color="secondary">Remove Budget</Button>
+            <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained" onClick={()=> onDeleteBudget(expense.id)}>Remove Budget</Button>
           </div>
         </div>
       ))}

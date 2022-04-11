@@ -2,6 +2,8 @@ import * as firebase from "firebase/app";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   getFirestore,
   query,
@@ -38,6 +40,10 @@ export const getExpenseByUser = ({ queryKey }: any) => {
   return getDocs(expensesQuery);
 };
 
+export const deleteBudget = (budgetId:string) => {
+  const deletedBudget = doc(db,'budgets',budgetId);
+  return deleteDoc(deletedBudget);
+};
 
 export const addBudget = (budgetRecord: BudgetRecord) => {
   return addDoc(budgetRef, budgetRecord);
