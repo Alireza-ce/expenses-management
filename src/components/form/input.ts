@@ -3,6 +3,6 @@ import TextField from "@material-ui/core/TextField";
 
 export const TextFieldCustom = styled(TextField)`
   && {
-    margin: 24px;
+    margin: 12px 24px;
   }
 `;

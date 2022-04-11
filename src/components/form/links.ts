@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const RedirectLinks = styled.div`
+export const LinkBox = styled.div`
   text-align: center;
-  a > & {
-    color: red;
-  }
+  margin-top:12px ;
 `;
 
 export const CustomLink = styled(Link)`
-  color: darkblue;
+  color: ${props => props.theme.primaryColor};
   text-decoration: none;
 `;

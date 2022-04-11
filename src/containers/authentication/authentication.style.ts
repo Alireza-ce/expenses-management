@@ -4,5 +4,6 @@ export const Authentication = styled.div`
     display: flex;
     flex-direction:column;
     justify-content: center;
-    margin: 12px 0;
+    padding: 12px 0;
+    min-height:100vh;
 `;

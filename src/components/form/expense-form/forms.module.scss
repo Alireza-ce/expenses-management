@@ -1,0 +1,25 @@
+@import '/src/assets/sass/variable';
+@import '/src/assets/sass/mixin';
+
+.form_wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.form_title{
+    text-align: center;
+}
+
+.error_text{
+    margin: 0 24px;
+    color: $red;
+}
+
+.empty_list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+        text-align: center;
+    }
+}
