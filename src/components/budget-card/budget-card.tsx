@@ -1,23 +1,33 @@
 import Button from "@material-ui/core/Button";
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteBudget } from "../../firebase/firebase";
 import classes from "./budget-card.module.scss";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ExpensesDialog from "./expenses-list/expenses-list-dialog";
 
 export default function BudgetCard({ expense }: any) {
     const { mutate, isSuccess, reset: resetMutation, isLoading } = useMutation(deleteBudget);
     const queryClient = useQueryClient();
-
+    const [isOpenExpenses, setOpenExpensesList] = useState(false);
+    const [budgetExpenseList, setBudgetExpensesList] = useState({ expenses: [''], name: '' });
 
     const onDeleteBudget = (budgetId: string) => {
-
-        console.log('budgetId', budgetId)
         mutate(budgetId, {
             onSuccess: (data) => {
                 queryClient.invalidateQueries('budgetList');
             }
         })
+    };
+
+    const openExpensesList = (expenses: any[], budgetName: string) => {
+        setBudgetExpensesList({ expenses: expenses, name: budgetName })
+        setOpenExpensesList(true);
+    }
+
+    const handleClose = () => {
+        setOpenExpensesList(false);
+        setBudgetExpensesList({ expenses: [''], name: '' })
     };
 
     return (
@@ -29,7 +39,7 @@ export default function BudgetCard({ expense }: any) {
                 <p>Total Expenses: <span>{expense.spendingMoney - expense.remainingMoney}$</span></p>
             </div>
             <div className={classes.card_buttons}>
-                <Button className={`${classes.detail_button} ${classes.info_button}`} type="submit" variant="contained">Expenses List</Button>
+                <Button className={`${classes.detail_button} ${classes.info_button}`} type="submit" variant="contained" onClick={() => { openExpensesList(expense.children, expense.name) }}>Expenses List</Button>
                 <Button className={`${classes.detail_button} ${classes.edit_button}`} type="submit" variant="contained">Edit Budget</Button>
                 <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained" onClick={() => onDeleteBudget(expense.id)} disabled={isLoading}>
                     {isLoading ? (
@@ -41,6 +51,7 @@ export default function BudgetCard({ expense }: any) {
                     )}
                 </Button>
             </div>
+            <ExpensesDialog open={isOpenExpenses} expenses={budgetExpenseList?.expenses} budgetName={budgetExpenseList?.name} onClose={handleClose} />
         </div>
     );
 }

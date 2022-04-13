@@ -1,0 +1,45 @@
+@import '/src/assets/sass/variable';
+@import '/src/assets/sass/mixin';
+
+.budget_card {
+    @include cardWrapper;
+    padding:0 24px 12px;
+
+    .card_info {
+        p {
+            margin-bottom: 8px;
+            span {
+                font-weight: bold;
+                color: $dark-blue;
+            }
+        }
+    }
+
+    .card_buttons {
+        display: flex;
+        justify-content: space-between;
+
+        padding-bottom: 8px;
+        border-bottom: 1px solid gray;
+        .detail_button {
+            color: $white;
+            margin-top: 8px;
+            width: 200px;
+        }
+
+        .edit_button {
+            background-color: $orange;
+        }
+
+        .remove_button {
+            background-color: $red;
+            margin-left: 8px;
+        }
+    }
+}
+
+.empty_list{
+    text-align: center;
+    margin:12px;
+    font-weight: bold;
+}
