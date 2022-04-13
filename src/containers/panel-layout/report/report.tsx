@@ -1,16 +1,14 @@
-import Button from "@material-ui/core/Button";
 import React from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { deleteBudget, getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
+import { useQuery } from "react-query";
+import BudgetCard from "../../../components/budget-card/budget-card";
+import { getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import classes from "./report.module.scss";
 
 export default function Report() {
   const { currentUser } = useAuth();
-  const { mutate, isSuccess, reset: resetMutation } = useMutation(deleteBudget);
-  const queryClient = useQueryClient();
-  
-  const { data: budgets, isLoading, isError } = useQuery(['budgetList', currentUser?.uid], getBudgetList, {
+
+  const { data: budgets, isLoading, isError, isFetching } = useQuery(['budgetList', currentUser?.uid], getBudgetList, {
     enabled: !!currentUser,
     select: (data) => {
       let money: number = 0;
@@ -21,7 +19,6 @@ export default function Report() {
           name: budget.data().name,
           spendingMoney: budget.data().spendingMoney,
           remainingMoney: budget.data().spendingMoney,
-
           user: budget.data().user,
           children: [{}]
         }
@@ -46,20 +43,12 @@ export default function Report() {
         }
         parentBudget?.children.push(expense)
       })
-    
+
       return expensesListBaseBudget;
     },
   })
 
-  const onDeleteBudget = (budgetId:string) => {
-    mutate(budgetId, {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries(['budgetList','totalExpenses']);
-      }
-    })
-  };
-
-  if (isLoading || !currentUser || isLoadingExpenses) {
+  if (isLoading || !currentUser || isLoadingExpenses || isFetching) {
     return <span>Loading...</span>
   }
 
@@ -70,19 +59,7 @@ export default function Report() {
   return (
     <div className={classes.budgets_cards_wrapper}>
       {expenses?.map(expense => (
-        <div className={classes.budget_card} key={expense.id}>
-          <div className={classes.card_info}>
-            <p>Budget Name: <span>{expense.name}</span></p>
-            <p>Total Budget: <span>{expense.spendingMoney}$</span></p>
-            <p>Remaining Budget: <span>{expense.remainingMoney}$</span></p>
-            <p>Total Expenses: <span>{expense.spendingMoney - expense.remainingMoney}$</span></p>
-          </div>
-          <div className={classes.card_buttons}>
-            <Button className={`${classes.detail_button} ${classes.info_button}`} type="submit" variant="contained">Expenses List</Button>
-            <Button className={`${classes.detail_button} ${classes.edit_button}` } type="submit" variant="contained">Edit Budget</Button>
-            <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained" onClick={()=> onDeleteBudget(expense.id)}>Remove Budget</Button>
-          </div>
-        </div>
+        <BudgetCard expense={expense} key={expense.id} />
       ))}
     </div>
   );
