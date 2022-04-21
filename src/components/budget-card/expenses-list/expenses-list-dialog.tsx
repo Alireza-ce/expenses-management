@@ -24,7 +24,6 @@ export default function ExpensesDialog({ budgetName, expenses, open, onClose }: 
                                 <p>Amount: <span>{expense.amount}$</span></p>
                             </div>
                             <div className={classes.card_buttons}>
-                                <Button className={`${classes.detail_button} ${classes.edit_button}`} type="submit" variant="contained">Edit Expense</Button>
                                 <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained">Remove Expense</Button>
                             </div>
                         </div>}

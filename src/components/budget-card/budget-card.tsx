@@ -40,7 +40,6 @@ export default function BudgetCard({ expense }: any) {
             </div>
             <div className={classes.card_buttons}>
                 <Button className={`${classes.detail_button} ${classes.info_button}`} type="submit" variant="contained" onClick={() => { openExpensesList(expense.children, expense.name) }}>Expenses List</Button>
-                <Button className={`${classes.detail_button} ${classes.edit_button}`} type="submit" variant="contained">Edit Budget</Button>
                 <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained" onClick={() => onDeleteBudget(expense.id)} disabled={isLoading}>
                     {isLoading ? (
                         <CircularProgress

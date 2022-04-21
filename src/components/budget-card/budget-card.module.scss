@@ -15,16 +15,26 @@
         flex-direction: column;
         justify-content: space-between;
 
-        p{
-            span{
+        p {
+            margin-top: 8px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            span {
                 font-weight: bold;
                 color: $dark-blue;
             }
+
         }
     }
 
     .card_buttons {
         width: 35%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         .detail_button {
             width: 100%;
@@ -32,16 +42,16 @@
             margin-top: 8px;
         }
 
-        .info_button{
+        .info_button {
             margin-top: 0;
             color: $dark-blue;
         }
 
-        .edit_button{
-            background-color: $orange;  
+        .edit_button {
+            background-color: $orange;
         }
 
-        .remove_button{
+        .remove_button {
             background-color: $red;
         }
     }
