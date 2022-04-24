@@ -45,6 +45,11 @@ export const deleteBudget = (budgetId:string) => {
   return deleteDoc(deletedBudget);
 };
 
+export const deleteExpense = (expenseId:string) => {
+  const deletedExpense = doc(db,'expenses',expenseId);
+  return deleteDoc(deletedExpense);
+};
+
 export const addBudget = (budgetRecord: BudgetRecord) => {
   return addDoc(budgetRef, budgetRecord);
 };

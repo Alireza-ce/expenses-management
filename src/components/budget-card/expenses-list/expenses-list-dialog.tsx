@@ -3,6 +3,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React from "react";
 import classes from "./expenses-dialog-list.module.scss";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useMutation, useQueryClient } from "react-query";
+import { deleteExpense } from "../../../firebase/firebase";
 
 type ExpensesDialogProps = {
     expenses: any[],
@@ -12,6 +15,18 @@ type ExpensesDialogProps = {
 }
 
 export default function ExpensesDialog({ budgetName, expenses, open, onClose }: ExpensesDialogProps) {
+    const { mutate, isSuccess, reset: resetMutation, isLoading } = useMutation(deleteExpense);
+    const queryClient = useQueryClient();
+
+    const onDeleteBudget = (budgetId: string) => {
+        mutate(budgetId, {
+            onSuccess: (data) => {
+                queryClient.invalidateQueries('totalExpenses');
+                onClose();
+            }
+        })
+    };
+
     return (
         <Dialog onClose={onClose} open={open} >
             <DialogTitle>Budget Name: {budgetName}</DialogTitle>
@@ -24,7 +39,15 @@ export default function ExpensesDialog({ budgetName, expenses, open, onClose }: 
                                 <p>Amount: <span>{expense.amount}$</span></p>
                             </div>
                             <div className={classes.card_buttons}>
-                                <Button className={`${classes.detail_button} ${classes.remove_button}`} type="submit" variant="contained">Remove Expense</Button>
+                                <Button className={`${classes.detail_button} ${classes.remove_button}`} onClick={() => onDeleteBudget(expense.id)} disabled={isLoading} type="submit" variant="contained">
+                                    {isLoading ? (
+                                        <CircularProgress
+                                            style={{ width: "24px", height: "24px", color: "white" }}
+                                        />
+                                    ) : (
+                                        "Remove Expense"
+                                    )}
+                                </Button>
                             </div>
                         </div>}
                 </>
