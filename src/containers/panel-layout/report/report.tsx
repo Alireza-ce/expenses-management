@@ -48,7 +48,7 @@ export default function Report() {
     },
   })
 
-  if (isLoading || !currentUser || isLoadingExpenses || isFetching) {
+  if (isLoading || !currentUser || isLoadingExpenses) {
     return <span>Loading...</span>
   }
 
