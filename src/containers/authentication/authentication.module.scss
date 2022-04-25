@@ -5,9 +5,15 @@
     display: flex;
     margin: 32px auto;
     padding: 24px;
+    width: 100%;
     box-shadow: 0px 0px 16px rgb(255 255 255 / 30%);
     border-radius: 4px;
     background-color: $white;
+
+    @media (max-width: 768px) {
+        margin: 12px auto;
+        padding: 8px;
+    }
 
     .routerOutlet,
     .authenticationInfo {
@@ -18,8 +24,18 @@
 
     }
 
+    .routerOutlet {
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
+
     .authenticationInfo {
         align-items: center;
+
+        @media (max-width: 768px) {
+            display: none;
+        }
 
         h2 {
             color: $dark-blue;
