@@ -7,16 +7,19 @@
         flex-direction: column;
     }
 
-    .mobile_links{
+    .mobile_links {
         display: flex;
+        justify-content: center;
         padding: 12px;
         margin-bottom: 12px;
         background-color: $white;
-        p{
+
+        p {
             margin-left: 12px;
-        &:first-child{
-            margin-left: 0;
-        }
+
+            &:first-child {
+                margin-left: 0;
+            }
         }
     }
 
