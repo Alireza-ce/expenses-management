@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import BudgetCard from "../../../components/budget-card/budget-card";
 import { getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import classes from "./report.module.scss";
 
 export default function Report() {
@@ -49,7 +50,11 @@ export default function Report() {
   })
 
   if (isLoading || !currentUser || isLoadingExpenses) {
-    return <span>Loading...</span>
+    return (<div className={classes.loading_container}>
+      <CircularProgress
+        style={{ width: "24px", height: "24px", color: "white" }}
+      />
+    </div>)
   }
 
   if (expenses && expenses?.length === 0) {

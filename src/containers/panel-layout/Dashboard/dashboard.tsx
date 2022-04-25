@@ -5,6 +5,8 @@ import AddExpense from "../../../components/form/expense-form/add-expense";
 import { getBudgetList, getExpenseByUser } from "../../../firebase/firebase";
 import { useAuth } from "../../../hooks/context/AuthProvider";
 import classes from "./dashboard.module.scss";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 
 export default function Dashboard() {
   const { currentUser } = useAuth();
@@ -39,7 +41,11 @@ export default function Dashboard() {
   })
 
   if (isLoading || !currentUser || isLoadingExpenses) {
-    return <span>Loading...</span>
+    return (<div className={classes.loading_container}>
+      <CircularProgress
+        style={{ width: "24px", height: "24px", color: "white" }}
+      />
+    </div>)
   }
 
   return (

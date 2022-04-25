@@ -1,6 +1,11 @@
 @import '/src/assets/sass/variable';
 @import '/src/assets/sass/mixin';
 
+.loading_container{
+    text-align: center;
+    margin: 12px;
+}
+
 .info_box {
     display: flex;
     justify-content: space-between;
