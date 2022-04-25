@@ -73,7 +73,7 @@ function LoginPage() {
         </ButtonForm>
         {firebaseError.show && <p className={classes.errorText}>{firebaseError.message}</p>}
         <LinkBox >
-          You don't have Account? <CustomLink to="register"> Sign Up </CustomLink>
+          You don't have an Account? <CustomLink to="register"> Sign Up </CustomLink>
         </LinkBox>
       </AuthenticationForm>
     </LoginContainer>

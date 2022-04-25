@@ -1,10 +1,11 @@
-import { signOut, signInWithEmailAndPassword, onAuthStateChanged, User, UserCredential, signInWithCustomToken } from "firebase/auth";
+import { signOut, signInWithEmailAndPassword, onAuthStateChanged, User, UserCredential, createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase";
 
 interface ContextType {
     currentUser: User | null | undefined,
     signIn: (username: string, password: string) => Promise<UserCredential> | null,
+    signUp: (username: string, password: string) => Promise<UserCredential> | null,
     logOut: () => Promise<void> | null
 }
 
@@ -12,6 +13,7 @@ const AuthContext = React.createContext<ContextType>({
     currentUser: null,
     signIn: () => null,
     logOut:()=>null,
+    signUp:()=>null
 });
 
 export function useAuth() {
@@ -36,6 +38,10 @@ export function AuthProvider({ children }: Props) {
         return signInWithEmailAndPassword(auth, username, password);
     }
 
+    function signUp(username: string, password: string) {
+        return createUserWithEmailAndPassword(auth, username, password);
+    }
+
     function logOut(){
         return signOut(auth);
     }
@@ -43,7 +49,8 @@ export function AuthProvider({ children }: Props) {
     const value: ContextType = {
         currentUser,
         signIn,
-        logOut
+        logOut,
+        signUp
     }
 
     return (
