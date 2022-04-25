@@ -2,6 +2,24 @@
 
 .layout {
     display: flex;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    .mobile_links{
+        display: flex;
+        padding: 12px;
+        margin-bottom: 12px;
+        background-color: $white;
+        p{
+            margin-left: 12px;
+        &:first-child{
+            margin-left: 0;
+        }
+        }
+    }
+
 }
 
 .layoutContent {
